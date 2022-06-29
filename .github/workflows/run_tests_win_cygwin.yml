@@ -19,16 +19,20 @@ jobs:
     steps:
       - name: Fix line endings
         run: git config --global core.autocrlf input
+
       - uses: actions/checkout@v2
+
       - uses: cygwin/cygwin-install-action@v2
         with:
           platform: x86_64
           packages: >-
-            git automake libtool autoconf make cmake libhdf5-devel
-            libhdf4-devel zipinfo libxml2-devel
+            git automake libtool autoconf2.5 make cmake libhdf5-devel
+            libhdf4-devel zipinfo libxml2-devel perl
 
       - name: (Autotools) Run autoconf and friends
-        run: autoreconf --force --install
+        run: |
+          mkdir m4
+          /usr/bin/autoreconf-2.69 --force --install
 
       - name: (Autotools) Configure in-tree build
         run: /bin/dash ./configure --enable-hdf5 --enable-shared --disable-static --enable-dap --disable-dap-remote-tests --enable-plugins
