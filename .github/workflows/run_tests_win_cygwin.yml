@@ -1,0 +1,47 @@
+name: Run Cygwin-based tests
+
+on: [push, pull_request, workflow_dispatch]
+
+env:
+  SHELLOPTS: igncr
+  CHERE_INVOKING: 1
+  CYGWIN_NOWINPATH: 1
+
+jobs:
+  build-and-test:
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: bash -eo pipefail -o igncr "{0}"
+
+    name: Cygwin-based tests
+
+    steps:
+      - name: Fix line endings
+        run: git config --global core.autocrlf input
+      - uses: actions/checkout@v2
+      - uses: cygwin/cygwin-install-action@v2
+        with:
+          platform: x86_64
+          packages: >-
+            git automake libtool autoconf make cmake libhdf5-devel
+            libhdf4-devel zipinfo libxml2-devel
+
+      - name: (Autotools) Run autoconf and friends
+        run: autoreconf --force --install
+
+      - name: (Autotools) Configure in-tree build
+        run: /bin/dash ./configure --enable-hdf5 --enable-shared --disable-static --enable-dap --disable-dap-remote-tests --enable-plugins
+
+      - name: Look at config.log if error
+        if: ${{ failure() }}
+        run: cat config.log
+
+      - name: Print summary
+        run: cat libnetcdf.settings
+
+      - name: (Autotools) Build library and utilities
+        run: make -j8 SHELL=/bin/dash
+
+      - name: (Autotools) Build and run tests
+        run: make check -j8 SHELL=/bin/dash
