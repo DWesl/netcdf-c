@@ -53,3 +53,9 @@ jobs:
 
       - name: (Autotools) Build and run tests
         run: make check -j8 SHELL=/bin/dash
+
+      - name: (Autotools) Test DESTDIR install
+        run: |
+          make install DESTDIR=/tmp/pretend-root SHELL=/bin/dash
+          ls /tmp/pretend-root/$(pwd)
+          if [ $(ls /tmp/pretend-root/$(pwd) | wc -l) -gt 0 ]; then exit 1; fi
