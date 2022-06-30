@@ -96,9 +96,7 @@ TESTS += run_nczfilter.sh
 check_PROGRAMS += testfilter testfilter_misc testfilter_order testfilter_repeat testfilter_multi test_filter_avail
 TESTS += run_filter.sh 
 TESTS += run_unknown.sh
-if !ISCYGWIN
 TESTS += run_specific_filters.sh
-endif
 
 endif #ENABLE_FILTER_TESTING
 
@@ -117,7 +115,9 @@ zs3parse_SOURCES = zs3parse.c
 if ENABLE_NCZARR_S3
 noinst_PROGRAMS += s3util
 s3util_SOURCES = s3util.c
+if !ISCYGWIN
 TESTS += run_s3_cleanup.sh
+endif
 endif
 
 # Given a netcdf4|NCZarr file, dump the actual chunk contents.
