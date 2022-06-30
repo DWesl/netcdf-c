@@ -150,3 +150,9 @@ bzip2::
 clean-local:
 	rm -fr ${ALTPLUGINDIR}
 
+# Remove plugins "installed" to build tree
+install-data-hook:
+        if test "x$(DESTDIR)" != "x"; then cd $(DESTDIR)/$(tmpdir) && rm -f $(tmp_LTLIBRARIES); fi
+
+install-exec-hook:
+        if test "x$(DESTDIR)" != "x"; then cd $(DESTDIR)/$(tmpdir) && rm -f $(tmp_LTLIBRARIES:.la=.so); fi
