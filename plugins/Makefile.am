@@ -15,6 +15,7 @@ if ENABLE_PLUGIN_DIR
 plugindir = @PLUGIN_INSTALL_DIR@
 else
 plugindir = ${ALTPLUGINDIR}
+AM_LDFLAGS += -rpath $(abs_builddir)/.libs
 endif
 
 plugin_LTLIBRARIES =
