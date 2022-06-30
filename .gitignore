@@ -17,7 +17,10 @@ dap4_test/pingurl4.c
 ncdap_test/findtestserver.c
 
 Makefile.in
+aclocal.m4
+compile
 config.guess
+config.h.in
 config.sub
 configure
 depcomp
