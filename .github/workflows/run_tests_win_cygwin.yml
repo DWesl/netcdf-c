@@ -39,7 +39,11 @@ jobs:
           /usr/bin/autoreconf-2.69 --force --install --verbose --debug
 
       - name: (Autotools) Configure in-tree build
-        run: /bin/dash ./configure --enable-hdf5 --enable-shared --disable-static --enable-dap --disable-dap-remote-tests --enable-plugins
+        run: >-
+          /bin/dash ./configure --enable-hdf5 --enable-shared
+          --disable-static --enable-dap --disable-dap-remote-tests
+          --enable-plugins --disable-nczarr-filters
+          --disable-nczarr-s3 --disable-nczarr-s3-tests
 
       - name: Look at config.log if error
         if: ${{ failure() }}
