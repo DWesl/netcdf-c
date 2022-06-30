@@ -16,7 +16,6 @@
 #include <locale.h>
 //#include <direct.h>
 
-__declspec(dllexport)
 int
 getmountpoint(char* keyvalue, size_t size)
 {
