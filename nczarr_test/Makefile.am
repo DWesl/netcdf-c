@@ -95,8 +95,10 @@ TESTS += run_nczfilter.sh
 # Echo filter tests from nc_test4
 check_PROGRAMS += testfilter testfilter_misc testfilter_order testfilter_repeat testfilter_multi test_filter_avail
 TESTS += run_filter.sh 
-TESTS += run_unknown.sh 
+TESTS += run_unknown.sh
+if !ISCYGWIN
 TESTS += run_specific_filters.sh
+endif
 
 endif #ENABLE_FILTER_TESTING
 
