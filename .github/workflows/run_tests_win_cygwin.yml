@@ -31,14 +31,11 @@ jobs:
 
       - name: (Autotools) Run autoconf and friends
         env:
-          AUTOCONF: "true"
           AUTOMAKE: "true"
           LIBTOOLIZE: "true"
         run: |
           mkdir m4
-          /bin/dash /usr/bin/aclocal --force -I m4
           /bin/dash /usr/bin/libtoolize --force --copy --verbose
-          /bin/dash /usr/bin/autoconf-2.69 --force
           /bin/dash /usr/bin/automake --add-missing --copy --force-missing --verbose
           /usr/bin/autoreconf-2.69 --force --install --verbose
 
