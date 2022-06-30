@@ -152,7 +152,7 @@ clean-local:
 
 # Remove plugins "installed" to build tree
 install-data-hook:
-        if test "x$(DESTDIR)" != "x"; then cd $(DESTDIR)/$(tmpdir) && rm -f $(tmp_LTLIBRARIES); fi
+        if test "x$(DESTDIR)" != "x"; then cd $(DESTDIR)/$(ALTPLUGINDIR) && rm -f $(lib_LTLIBRARIES); fi
 
 install-exec-hook:
-        if test "x$(DESTDIR)" != "x"; then cd $(DESTDIR)/$(tmpdir) && rm -f $(tmp_LTLIBRARIES:.la=.so); fi
+        if test "x$(DESTDIR)" != "x"; then cd $(DESTDIR)/$(ALTPLUGINDIR) && rm -f $(lib_LTLIBRARIES:.la=.so); fi
