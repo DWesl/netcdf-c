@@ -59,15 +59,15 @@ lib__nch5shuffle_la_SOURCES = H5Zshuffle.c
 lib__nch5fletcher32_la_SOURCES = H5Zfletcher32.c H5checksum.c
 lib__nch5deflate_la_SOURCES = H5Zdeflate.c
 
-lib__nch5shuffle_la_LDFLAGS = ${plugin_version_info}
-lib__nch5deflate_la_LDFLAGS = ${plugin_version_info}
-lib__nch5fletcher32_la_LDFLAGS = ${plugin_version_info}
+lib__nch5shuffle_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS)
+lib__nch5deflate_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS)
+lib__nch5fletcher32_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS)
 
 # Need our version of szip if libsz available and we are not using HDF5
 if HAVE_SZ
 plugin_LTLIBRARIES += lib__nch5szip.la
 lib__nch5szip_la_SOURCES = H5Zszip.c H5Zszip.h
-lib__nch5szip_la_LDFLAGS = ${plugin_version_info}
+lib__nch5szip_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS)
 endif
 
 endif # ENABLE_NCZARR_FILTERS
@@ -83,13 +83,13 @@ plugin_LTLIBRARIES += lib__nczstdfilters.la
 
 if HAVE_BLOSC
 lib__nch5blosc_la_SOURCES = H5Zblosc.c H5Zblosc.h
-lib__nch5blosc_la_LDFLAGS = ${plugin_version_info}
+lib__nch5blosc_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS)
 plugin_LTLIBRARIES += lib__nch5blosc.la
 endif
 
 if HAVE_ZSTD
 lib__nch5zstd_la_SOURCES = H5Zzstd.c H5Zzstd.h
-lib__nch5zstd_la_LDFLAGS = ${plugin_version_info}
+lib__nch5zstd_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS)
 plugin_LTLIBRARIES += lib__nch5zstd.la
 endif
 
@@ -121,7 +121,7 @@ EXTRA_DIST += ${BZIP2SRC} BZIP2_LICENSE
 if HAVE_LOCAL_BZ2
 lib__nch5bzip2_la_SOURCES += ${BZIP2SRC}
 endif
-lib__nch5bzip2_la_LDFLAGS = ${plugin_version_info}
+lib__nch5bzip2_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS)
 plugin_LTLIBRARIES += lib__nch5bzip2.la
 
 endif #ENABLE_FILTER_TESTING
