@@ -30,10 +30,12 @@ jobs:
             libhdf4-devel zipinfo libxml2-devel perl
 
       - name: (Autotools) Run autoconf and friends
+        env:
+          LIBTOOLIZE: :
         run: |
           mkdir m4
           /bin/dash /usr/bin/libtoolize --force --copy --verbose
-          /usr/bin/autoreconf-2.69 --force --install
+          /usr/bin/autoreconf-2.69 --force --install --verbose
 
       - name: (Autotools) Configure in-tree build
         run: /bin/dash ./configure --enable-hdf5 --enable-shared --disable-static --enable-dap --disable-dap-remote-tests --enable-plugins
