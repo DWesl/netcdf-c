@@ -31,6 +31,7 @@ jobs:
 
       - name: (Autotools) Run autoconf and friends
         run: |
+          cp -f /bin/dash /bin/sh
           mkdir m4
           /bin/dash /usr/bin/libtoolize --force --copy --verbose
           /usr/bin/autoreconf-2.69 --force --install --verbose --debug
