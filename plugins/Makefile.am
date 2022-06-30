@@ -21,9 +21,9 @@ plugin_LTLIBRARIES =
 
 # Apparently one cannot have plugin_LTLIBRARIES and also noinst_LTLIBRARIES.
 # So create a tmp location for "noinst" shared libraries.
-tmpdir = ${ALTPLUGINDIR}
+# tmpdir = ${ALTPLUGINDIR}
 
-tmp_LTLIBRARIES =
+check_LTLIBRARIES =
 
 # This linker flag specifies libtool version info.
 # See http://www.gnu.org/software/libtool/manual/libtool.html#Libtool-versioning
@@ -115,7 +115,7 @@ lib__nczmisc_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS) -rpath $(abs_buil
 lib__nch5unknown_la_SOURCES = H5Zunknown.c
 lib__nch5unknown_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS) -rpath $(abs_builddir)/.libs
 
-tmp_LTLIBRARIES += lib__nch5noop.la lib__nch5noop1.la lib__nch5misc.la lib__nczmisc.la lib__nch5unknown.la
+check_LTLIBRARIES += lib__nch5noop.la lib__nch5noop1.la lib__nch5misc.la lib__nczmisc.la lib__nch5unknown.la
 
 # Bzip2 is used to test more complex filters
 lib__nch5bzip2_la_SOURCES = H5Zbzip2.c h5bzip2.h
