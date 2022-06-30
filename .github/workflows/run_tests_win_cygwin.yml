@@ -11,7 +11,6 @@ jobs:
   build-and-test:
     runs-on: windows-latest
     defaults:
-      timeout-minutes: 30
       run:
         shell: bash -eo pipefail -o igncr "{0}"
 
@@ -53,6 +52,7 @@ jobs:
         run: make -j8 SHELL=/bin/dash
 
       - name: (Autotools) Build and run tests
+        timeout-minutes: 30
         run: make check -j8 SHELL=/bin/dash
 
       - name: (Autotools) Test DESTDIR install
