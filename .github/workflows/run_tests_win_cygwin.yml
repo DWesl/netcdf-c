@@ -58,8 +58,11 @@ jobs:
       - name: (Autotools) Test DESTDIR install
         run: |
           make install DESTDIR=/tmp/pretend-root SHELL=/bin/dash
-          find /tmp/pretend-root/$(pwd)
-          if [ $(ls /tmp/pretend-root/$(pwd) | wc -l) -gt 0 ]; then exit 1; fi
+          if [ -d "/tmp/pretend-root/$(pwd)" ];
+          then
+              find /tmp/pretend-root/$(pwd)
+              if [ $(find /tmp/pretend-root/$(pwd) -type f | wc -l) -gt 0 ]; then exit 1; fi
+          fi
 
       - name: (Autotools) Build and run tests
         timeout-minutes: 30
