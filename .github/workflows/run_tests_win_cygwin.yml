@@ -11,9 +11,9 @@ jobs:
   build-and-test:
     runs-on: windows-latest
     defaults:
+      timeout-minutes: 30
       run:
         shell: bash -eo pipefail -o igncr "{0}"
-        timeout-minutes: 30
 
     name: Cygwin-based tests
 
