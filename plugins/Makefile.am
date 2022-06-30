@@ -76,7 +76,10 @@ if ENABLE_PLUGINS
 
 # The NCZarr codec libraries
 lib__nczstdfilters_la_SOURCES = NCZstdfilters.c
+lib__nczstdfilters_la_LIBADD = $(LIBADD)
 lib__nczhdf5filters_la_SOURCES = NCZhdf5filters.c
+lib__nczhdf5filters_la_LIBADD = $(LIBADD)
+
 
 plugin_LTLIBRARIES += lib__nczhdf5filters.la
 plugin_LTLIBRARIES += lib__nczstdfilters.la
