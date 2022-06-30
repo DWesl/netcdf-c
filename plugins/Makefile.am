@@ -5,7 +5,7 @@
 include $(top_srcdir)/lib_flags.am
 
 AM_LDFLAGS += -module -avoid-version -shared -export-dynamic	\
- -rpath ${abs_builddir} ${NOUNDEFINED}
+  $(NOUNDEFINED)
 
 # Create an alternate directory if not installing or for noinst installs.
 ALTPLUGINDIR = ${abs_top_builddir}/plugins/plugindir
@@ -102,18 +102,18 @@ endif #ENABLE_PLUGINS
 # Need two distinct instances
 lib__nch5noop_la_SOURCES = H5Znoop.c H5Zutil.c h5noop.h
 lib__nch5noop1_la_SOURCES = H5Znoop1.c H5Zutil.c h5noop.h
-lib__nch5noop_la_LDFLAGS = ${plugin_version_info}
-lib__nch5noop1_la_LDFLAGS = ${plugin_version_info}
+lib__nch5noop_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS) -rpath $(abs_builddir)/.libs
+lib__nch5noop1_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS) -rpath $(abs_builddir)/.libs
 
 # The misc filter is to allow testing of filter arguments
 lib__nch5misc_la_SOURCES = H5Zmisc.c H5Zutil.c h5misc.h
-lib__nch5misc_la_LDFLAGS = ${plugin_version_info}
+lib__nch5misc_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS) -rpath $(abs_builddir)/.libs
 lib__nczmisc_la_SOURCES = NCZmisc.c
-lib__nczmisc_la_LDFLAGS = ${plugin_version_info}
+lib__nczmisc_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS) -rpath $(abs_builddir)/.libs
 
 # Provide a filter to test missing filter
 lib__nch5unknown_la_SOURCES = H5Zunknown.c
-lib__nch5unknown_la_LDFLAGS = ${plugin_version_info}
+lib__nch5unknown_la_LDFLAGS = ${plugin_version_info} $(AM_LDFLAGS) -rpath $(abs_builddir)/.libs
 
 tmp_LTLIBRARIES += lib__nch5noop.la lib__nch5noop1.la lib__nch5misc.la lib__nczmisc.la lib__nch5unknown.la
 
