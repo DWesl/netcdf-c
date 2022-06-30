@@ -32,6 +32,7 @@ jobs:
       - name: (Autotools) Run autoconf and friends
         run: |
           mkdir m4
+          /bin/dash /usr/bin/libtoolize --force --copy --verbose
           /usr/bin/autoreconf-2.69 --force --install
 
       - name: (Autotools) Configure in-tree build
