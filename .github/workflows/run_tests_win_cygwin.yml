@@ -27,7 +27,7 @@ jobs:
           platform: x86_64
           packages: >-
             git automake libtool autoconf2.5 make cmake libhdf5-devel
-            libhdf4-devel zipinfo libxml2-devel perl
+            libhdf4-devel zipinfo libxml2-devel perl zlib-devel
 
       - name: (Autotools) Run autoconf and friends
         run: |
