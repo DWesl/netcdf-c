@@ -43,7 +43,7 @@ jobs:
           /bin/dash ./configure --enable-hdf5 --enable-shared
           --disable-static --enable-dap --disable-dap-remote-tests
           --enable-plugins --disable-nczarr-filters
-          --disable-nczarr-s3 --disable-nczarr-s3-tests
+          --disable-nczarr-s3 --disable-nczarr-s3-tests --disable-nczarr
 
       - name: Look at config.log if error
         if: ${{ failure() }}
