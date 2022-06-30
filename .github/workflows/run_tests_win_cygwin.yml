@@ -30,7 +30,6 @@ jobs:
             libhdf4-devel zipinfo libxml2-devel perl
 
       - name: (Autotools) Run autoconf and friends
-        env:
         run: |
           mkdir m4
           /bin/dash /usr/bin/libtoolize --force --copy --verbose
