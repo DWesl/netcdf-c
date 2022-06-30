@@ -7,7 +7,7 @@
 name: Run MSYS2, MinGW64-based Tests
 
 
-on: [pull_request, workflow_dispatch]
+on: [push, pull_request, workflow_dispatch]
 
 jobs:
 
@@ -46,7 +46,7 @@ jobs:
         run: cat libnetcdf.settings
 
       - name: (Autotools) Build Library and Utilities
-        run: make -j 8 LDFLAGS="-no-undefined -Wl,--export-all-symbols"
+        run: make -j 8
         if: ${{ success() }}
 
       - name: (Autotools) Build and Run Tests
