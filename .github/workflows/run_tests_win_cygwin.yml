@@ -28,6 +28,8 @@ jobs:
           packages: >-
             git automake libtool autoconf2.5 make cmake libhdf5-devel
             libhdf4-devel zipinfo libxml2-devel perl zlib-devel
+            libzstd-devel libbz2-devel libaec-devel libzip-devel
+            libdeflate-devel gcc-core
 
       - name: (Autotools) Run autoconf and friends
         run: |
