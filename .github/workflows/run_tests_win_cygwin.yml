@@ -36,6 +36,7 @@ jobs:
           LIBTOOLIZE: "true"
         run: |
           mkdir m4
+          /bin/dash /usr/bin/aclocal --force -I m4
           /bin/dash /usr/bin/libtoolize --force --copy --verbose
           /bin/dash /usr/bin/autoconf-2.69 --force
           /bin/dash /usr/bin/automake --add-missing --copy --force-missing --verbose
