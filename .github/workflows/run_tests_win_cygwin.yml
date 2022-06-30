@@ -31,7 +31,7 @@ jobs:
 
       - name: (Autotools) Run autoconf and friends
         env:
-          LIBTOOLIZE: ":"
+          LIBTOOLIZE: "true"
         run: |
           mkdir m4
           /bin/dash /usr/bin/libtoolize --force --copy --verbose
