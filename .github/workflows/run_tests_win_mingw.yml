@@ -54,3 +54,13 @@ jobs:
       - name: (Autotools) Build and Run Tests
         run: make check -j 8
         if: ${{ success() }}
+        id: tests
+
+      - name: Upload test failures
+        if: ${{ failure() && steps.tests.conclusion == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: test-logs
+          path: |
+            */*.log
+            */*.trs
