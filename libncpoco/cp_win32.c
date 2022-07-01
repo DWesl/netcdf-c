@@ -32,7 +32,7 @@ static int isAbsolutePath(const char* path);
 extern char *nulldup(const char* s) {
     if (s) {
         char *result = malloc(strlen(s) + 1);
-        strcopy(result, s);
+        strcpy(result, s);
         return result;
     } else {
         return s;
