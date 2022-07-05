@@ -93,7 +93,8 @@ TESTS += tst_unknown.sh
 TESTS += tst_specific_filters.sh
 if ISMINGW
 XFAIL_TESTS += tst_filter.sh
-endif
+endif # ISMINGW
+endif # ENABLE_FILTER_TESTING
 endif # USE_HDF5
 endif # BUILD_UTILITIES
 
