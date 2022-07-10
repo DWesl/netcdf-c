@@ -86,10 +86,6 @@ else # Case 2: automake
   fi
 fi
 
-echo "findplugin.sh: FP_PLUGINS: ${FP_PLUGINS}"
-dir "${FP_PLUGINS}"
-echo "findplugin.sh: FP_PLUGIN_DIR: ${FP_PLUGIN_DIR}"
-dir "${FP_PLUGINS}"
 # Verify
 if test "x$FP_PLUGIN_DIR" = x ; then
   echo "***Fail: Could not locate a usable HDF5_PLUGIN_DIR"
