@@ -86,16 +86,19 @@ jobs:
         with:
           platform: x86_64
           packages: >-
-            git make cmake ninja libhdf5-devel
+            git make cmake ninja libhdf5-devel m4
             libhdf4-devel zipinfo libxml2-devel perl zlib-devel
             libzstd-devel libbz2-devel libaec-devel libzip-devel
             libdeflate-devel gcc-core
 
       - name: (CMake) Configure project
-        run: |
-          mkdir build
-          cd build
-          cmake .. -DENABLE_DAP=Yes -DENABLE_HDF5=Yes -DENABLE_NCZARR=Yes
+        run: >-
+          mkdir build && cd build && cmake .. -DBUILD_SHARED_LIBS=ON
+            -DENABLE_DAP=Yes -DENABLE_DOXYGEN=ON -DENABLE_EXAMPLES=ON
+            -DENABLE_EXAMPLE_TESTS=ON -DENABLE_EXTRA_TESTS=OFF
+            -DENABLE_FILTER_TESTING=ON -DENABLE_HDF4=ON DENABLE_HDF5=Yes
+            -DENABLE_NCZARR=Yes -DENABLE_PLUGINS=ON -DENABLE_TESTS=ON
+            -DENABLE_UNIT_TESTS=ON
 
       - name: Print summary
         run: >-
@@ -107,8 +110,13 @@ jobs:
 
       - name: (CMake) Test
         id: cmake-tests
-        run: |
+        run: >-
           cd build && ctest -j8 .
+
+      - name: (CMake) Verbose output of CTest failures
+        if: failure() && steps.cmake-tests.conclusion == 'failure'
+        run: >-
+          cd build && ctest --output-on-failure -j8 --rerun-failed -VV .
 
       - uses: actions/upload-artifact@v3
         if: failure() && steps.cmake-tests.conclusion == 'failure'
