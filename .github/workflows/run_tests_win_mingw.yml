@@ -65,7 +65,7 @@ jobs:
         if: ${{ failure() && steps.tests.conclusion == 'failure' }}
         uses: actions/upload-artifact@v3
         with:
-          name: test-logs
+          name: mingw-autotools-test-logs
           path: |
             */*.log
             */*.trs
