@@ -12,7 +12,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: bash -eo pipefail -o igncr "{0}"
+        shell: C:/cygwin/bin/bash.exe -eo pipefail -o igncr "{0}"
 
     name: Cygwin-based Autotools tests
 
@@ -72,9 +72,9 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: bash -eo pipefail -o igncr "{0}"
+        shell: C:/cygwin/bin/bash.exe -eo pipefail -o igncr "{0}"
 
-    name: Cygwin-based Autotools tests
+    name: Cygwin-based CMake tests
 
     steps:
       - name: Fix line endings
@@ -91,9 +91,13 @@ jobs:
             libzstd-devel libbz2-devel libaec-devel libzip-devel
             libdeflate-devel gcc-core
 
+      - uses: egor-tensin/cleanup-path@v1
+        with:
+          dirs: "C:\\cygwin\\bin;C:\\cygwin\\lib\\lapack"
+
       - name: (CMake) Configure project
         run: >-
-          mkdir build && cd build && cmake .. -DBUILD_SHARED_LIBS=ON
+          mkdir build && cd build && /usr/bin/cmake .. -DBUILD_SHARED_LIBS=ON
             -DENABLE_DAP=Yes -DENABLE_DOXYGEN=ON -DENABLE_EXAMPLES=ON
             -DENABLE_EXAMPLE_TESTS=ON -DENABLE_EXTRA_TESTS=OFF
             -DENABLE_FILTER_TESTING=ON -DENABLE_HDF4=ON DENABLE_HDF5=Yes
@@ -106,17 +110,17 @@ jobs:
 
       - name: (CMake) Build all
         run: >-
-          cd build && cmake --build . --verbose -j8
+          cd build && /usr/bin/cmake --build . --verbose -j8
 
       - name: (CMake) Test
         id: cmake-tests
         run: >-
-          cd build && ctest -j8 .
+          cd build && /usr/bin/ctest -j8 .
 
       - name: (CMake) Verbose output of CTest failures
         if: failure() && steps.cmake-tests.conclusion == 'failure'
         run: >-
-          cd build && ctest --output-on-failure -j8 --rerun-failed -VV .
+          cd build && /usr/bin/ctest --output-on-failure -j8 --rerun-failed -VV .
 
       - uses: actions/upload-artifact@v3
         if: failure() && steps.cmake-tests.conclusion == 'failure'
