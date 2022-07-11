@@ -108,6 +108,6 @@ jobs:
           cd build && ctest --output-on-failure -j8 .
 
       - name: (CMake) Verbose output of CTest failures
-        if: failure() && steps.cmake-run-tests.conclusion == "failure"
+        if: failure() && steps.cmake-run-tests.conclusion == 'failure'
         run: >-
           cd build && ctest --output-on-failure -j8 --rerun-failed -VV .
