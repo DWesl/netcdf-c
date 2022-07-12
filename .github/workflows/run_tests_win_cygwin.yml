@@ -98,7 +98,7 @@ jobs:
       - name: (CMake) Configure project
         run: >-
           mkdir build && cd build && /usr/bin/cmake .. -DBUILD_SHARED_LIBS=ON
-            -DENABLE_DAP=Yes -DENABLE_DOXYGEN=ON -DENABLE_EXAMPLES=ON
+            -DENABLE_DOXYGEN=ON -DENABLE_EXAMPLES=ON
             -DENABLE_EXAMPLE_TESTS=ON -DENABLE_EXTRA_TESTS=OFF
             -DENABLE_FILTER_TESTING=ON -DENABLE_HDF4=ON DENABLE_HDF5=Yes
             -DENABLE_NCZARR=Yes -DENABLE_PLUGINS=ON -DENABLE_TESTS=ON
