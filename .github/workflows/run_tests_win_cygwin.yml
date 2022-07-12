@@ -96,13 +96,10 @@ jobs:
           dirs: "C:\\cygwin\\bin;C:\\cygwin\\lib\\lapack"
 
       - name: (CMake) Configure project
-        run: >-
-          mkdir build && cd build && /usr/bin/cmake .. -DBUILD_SHARED_LIBS=ON
-            -DENABLE_DOXYGEN=ON -DENABLE_EXAMPLES=ON
-            -DENABLE_EXAMPLE_TESTS=ON -DENABLE_EXTRA_TESTS=OFF
-            -DENABLE_FILTER_TESTING=ON -DENABLE_HDF4=ON DENABLE_HDF5=Yes
-            -DENABLE_NCZARR=Yes -DENABLE_PLUGINS=ON -DENABLE_TESTS=ON
-            -DENABLE_UNIT_TESTS=ON
+        run: |
+          mkdir build
+          cd build
+          /usr/bin/cmake .. -DBUILD_SHARED_LIBS=ON -DENABLE_DAP=ON -DENABLE_DOXYGEN=ON -DENABLE_EXAMPLES=ON -DENABLE_EXAMPLE_TESTS=ON -DENABLE_EXTRA_TESTS=OFF -DENABLE_FILTER_TESTING=ON -DENABLE_HDF4=ON DENABLE_HDF5=Yes -DENABLE_NCZARR=Yes -DENABLE_PLUGINS=ON -DENABLE_TESTS=ON -DENABLE_UNIT_TESTS=ON
 
       - name: Print summary
         run: >-
