@@ -85,7 +85,7 @@ jobs:
           msystem: MINGW64
           update: true
           install: >-
-            git mingw-w64-x86_64-toolchain make cmake
+            git mingw-w64-x86_64-toolchain make cmake m4
             mingw-w64-x86_64-hdf5 unzip mingw-w64-x86_64-libxml2
 
       - name: (CMake) Configure project
