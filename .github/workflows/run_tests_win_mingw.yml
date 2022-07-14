@@ -90,9 +90,13 @@ jobs:
             git mingw-w64-x86_64-toolchain make cmake m4
             mingw-w64-x86_64-hdf5 unzip mingw-w64-x86_64-libxml2
 
-      - name: (CMake) Configure project
+      - name: Set up build directory
         run: |
           mkdir build
+
+      - name: (CMake) Configure project
+        shell: pwsh
+        run: |
           cd build
           cmake .. -DENABLE_HDF5=TRUE
 
