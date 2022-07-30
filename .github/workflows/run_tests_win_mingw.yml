@@ -75,6 +75,7 @@ jobs:
     runs-on: windows-latest
     env:
       CPPFLAGS: -I/mingw64/include/libxml2/
+      CMAKE_PREFIX_PATH: /mingw64
     defaults:
       run:
         shell: msys2 {0}
