@@ -76,6 +76,7 @@ jobs:
     env:
       CPPFLAGS: -I/mingw64/include/libxml2/
       CMAKE_PREFIX_PATH: /mingw64
+      HDF5_DIR: /mingw64/lib/cmake/
     defaults:
       run:
         shell: msys2 {0}
