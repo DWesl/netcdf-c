@@ -41,7 +41,7 @@ jobs:
       - name: (Autotools) Configure in-tree build
         run: >-
           /bin/dash ./configure --enable-hdf5 --enable-shared
-          --disable-static --enable-dap --disable-dap-remote-tests
+          --disable-static --enable-dap --enable-dap-remote-tests
           --enable-plugins --disable-nczarr-filters
           --disable-nczarr-s3 --disable-nczarr-s3-tests --disable-nczarr
 
