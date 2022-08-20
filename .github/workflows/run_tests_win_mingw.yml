@@ -109,8 +109,9 @@ jobs:
           cd build && cat libnetcdf.settings
 
       - name: (CMake) Build all
-        run: >-
-          cd build && cmake --build -j8
+        run: |
+          cd build 
+          cmake --build . -j8
 
       - name: (CMake) Run tests
         id: cmake-run-tests
