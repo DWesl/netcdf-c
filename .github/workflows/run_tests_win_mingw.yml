@@ -99,7 +99,6 @@ jobs:
           mkdir build
 
       - name: (CMake) Configure project
-        shell: pwsh
         run: |
           cd build
           ls ${HDF5_DIR}
