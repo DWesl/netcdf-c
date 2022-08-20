@@ -102,6 +102,7 @@ jobs:
         shell: pwsh
         run: |
           cd build
+          ls ${HDF5_DIR}
           cmake .. -DENABLE_HDF5=TRUE -DENABLE_DAP=FALSE
 
       - name: Print summary
