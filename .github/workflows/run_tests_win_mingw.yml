@@ -92,7 +92,8 @@ jobs:
           update: true
           install: >-
             git mingw-w64-x86_64-toolchain make cmake m4
-            mingw-w64-x86_64-hdf5 unzip mingw-w64-x86_64-libxml2 mingw-w64-x86_64-curl
+            mingw-w64-x86_64-hdf5 unzip mingw-w64-x86_64-libxml2
+            mingw-w64-x86_64-curl mingw-w64-x86_64-dlfcn
 
       - name: Set up build directory
         run: |
