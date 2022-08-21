@@ -61,6 +61,10 @@ add_library(nczarr OBJECT ${libnczarr_SOURCES})
 
 TARGET_INCLUDE_DIRECTORIES(nczarr PUBLIC ../libncpoco)
 
+IF (WIN32 OR CYGWIN)
+target_link_libraries(nczarr PUBLIC ncpoco)
+ENDIF()
+
 IF(MPI_C_INCLUDE_PATH)
     target_include_directories(nczarr PUBLIC ${MPI_C_INCLUDE_PATH})
 ENDIF(MPI_C_INCLUDE_PATH)
