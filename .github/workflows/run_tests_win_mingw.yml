@@ -103,7 +103,7 @@ jobs:
         run: |
           cd build
           ls ${HDF5_DIR}
-          cmake .. -DENABLE_HDF5=TRUE -DENABLE_DAP=FALSE -DCMAKE_HOST_SYSTEM_NAME=Windows -DCMAKE_SYSTEM_VERSION=8.1 -DENABLE_PLUGINS=ON -DWIN32
+          cmake .. -DENABLE_HDF5:bool=TRUE -DENABLE_DAP:bool=FALSE -DCMAKE_HOST_SYSTEM_NAME=Windows -DCMAKE_SYSTEM_VERSION=8.1 -DENABLE_PLUGINS:bool=ON -DWIN32:bool=ON
 
       - name: Print summary
         run: >-
