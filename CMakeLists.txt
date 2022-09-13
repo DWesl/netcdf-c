@@ -2072,7 +2072,7 @@ MACRO(add_bin_test prefix F)
   ADD_TEST(${prefix}_${F}
            ${EXECUTABLE_OUTPUT_PATH}/${prefix}_${F}
            )
-  IF(MSVC)
+  IF(WIN32 OR CYGWIN)
     SET_PROPERTY(TEST ${prefix}_${F} PROPERTY FOLDER "tests/")
     SET_TARGET_PROPERTIES(${prefix}_${F} PROPERTIES RUNTIME_OUTPUT_DIRECTORY
       ${CMAKE_CURRENT_BINARY_DIR})
