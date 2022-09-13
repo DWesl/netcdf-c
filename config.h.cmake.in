@@ -103,12 +103,6 @@ are set when opening a binary file on Windows. */
 /* default chunk size in bytes */
 #cmakedefine DEFAULT_CHUNK_SIZE ${DEFAULT_CHUNK_SIZE}
 
-/* set this only when building a DLL under MinGW */
-#cmakedefine DLL_EXPORT 1
-
-/* set this only when building a DLL under MinGW */
-#cmakedefine DLL_NETCDF 1
-
 /* if true, use atexist */
 #cmakedefine ENABLE_ATEXIT_FINALIZE 1
 
