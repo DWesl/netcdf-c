@@ -56,13 +56,14 @@ tst_chunkcases_SOURCES = tst_chunkcases.c ${tstcommonsrc}
 TESTS += run_chunkcases.sh
 
 TESTS += run_quantize.sh
-
 TESTS += run_purezarr.sh
 TESTS += run_interop.sh
 TESTS += run_misc.sh
 TESTS += run_nczarr_fill.sh
 TESTS += run_jsonconvention.sh
-
+TESTS += run_strings.sh
+TESTS += run_scalar.sh
+TESTS += run_nulls.sh
 endif
 
 if BUILD_UTILITIES 
@@ -135,9 +136,10 @@ EXTRA_DIST = CMakeLists.txt \
 run_ut_map.sh run_ut_mapapi.sh run_ut_misc.sh run_ut_chunk.sh run_ncgen4.sh \
 run_nccopyz.sh run_fillonlyz.sh run_chunkcases.sh test_nczarr.sh run_perf_chunks1.sh run_s3_cleanup.sh \
 run_purezarr.sh run_interop.sh run_misc.sh \
-run_filter.sh run_specific_filters.sh \
+run_filter.sh \
 run_newformat.sh run_nczarr_fill.sh run_quantize.sh \
-run_jsonconvention.sh run_nczfilter.sh run_unknown.sh
+run_jsonconvention.sh run_nczfilter.sh run_unknown.sh \
+run_scalar.sh run_strings.sh run_nulls.sh
 
 EXTRA_DIST += \
 ref_ut_map_create.cdl ref_ut_map_writedata.cdl ref_ut_map_writemeta2.cdl ref_ut_map_writemeta.cdl \
@@ -156,14 +158,17 @@ ref_xarray.cdl ref_purezarr.cdl ref_purezarr_base.cdl ref_nczarr2zarr.cdl \
 ref_bzip2.cdl ref_filtered.cdl ref_multi.cdl \
 ref_any.cdl ref_oldformat.cdl ref_oldformat.zip ref_newformatpure.cdl \
 ref_groups.h5 ref_byte.zarr.zip ref_byte_fill_value_null.zarr.zip \
-ref_groups_regular.cdl ref_byte.cdl ref_byte_fill_value_null.cdl ref_jsonconvention.cdl
+ref_groups_regular.cdl ref_byte.cdl ref_byte_fill_value_null.cdl \
+ref_jsonconvention.cdl ref_jsonconvention.zmap \
+ref_string.cdl ref_string_nczarr.baseline ref_string_zarr.baseline ref_scalar.cdl \
+ref_nulls_nczarr.baseline ref_nulls_zarr.baseline ref_nulls.cdl
 
 # Interoperability files
 EXTRA_DIST += ref_power_901_constants_orig.zip ref_power_901_constants.cdl ref_quotes_orig.zip ref_quotes.cdl 
 
 CLEANFILES = ut_*.txt ut*.cdl tmp*.nc tmp*.cdl tmp*.txt tmp*.dmp tmp*.zip tmp*.nc tmp*.dump tmp*.tmp tmp_ngc.c ref_zarr_test_data.cdl tst_*.nc.zip ref_quotes.zip ref_power_901_constants.zip
 
-BUILT_SOURCES = test_quantize.c test_filter_avail.c run_specific_filters.sh run_filterinstall.sh
+BUILT_SOURCES = test_quantize.c test_filter_avail.c run_specific_filters.sh run_filterinstall.sh run_unknown.sh
 test_quantize.c: $(top_srcdir)/nc_test4/tst_quantize.c
 	rm -f $@
 	echo "#define TESTNCZARR" > $@
