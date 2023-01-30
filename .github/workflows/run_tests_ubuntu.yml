@@ -545,10 +545,14 @@ jobs:
       - name: Configure
         shell: bash -l {0}
         run: |
-          if [ -d netcdf-c* ];
-          then
-              cd netcdf-c*
-          fi
+          for name in netcdf-c*;
+          do
+              if [ -d ${name} ];
+              then
+                  cd ${name}
+                  break
+              fi
+          done
           current_directory="$(pwd)"
           mkdir ../build
           cd ../build && CFLAGS=${CFLAGS} LDFLAGS=${LDFLAGS} LD_LIBRARY_PATH=${LD_LIBRARY_PATH} "${current_directory}/configure" ${ENABLE_HDF5} ${ENABLE_DAP} ${ENABLE_NCZARR}
