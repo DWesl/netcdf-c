@@ -480,6 +480,7 @@ jobs:
               if [ -d ${name} ];
               then
                   cd ${name}
+                  break
               fi
           done
 
@@ -531,10 +532,14 @@ jobs:
       - name: Run autoconf
         shell: bash -l {0}
         run: |
-          if [ -d netcdf-c* ];
-          then
-              cd netcdf-c*
-          fi
+          for name in netcdf-c*;
+          do
+              if [ -d ${name} ];
+              then
+                  cd ${name}
+                  break
+              fi
+          done
           autoreconf -if
 
       - name: Configure
