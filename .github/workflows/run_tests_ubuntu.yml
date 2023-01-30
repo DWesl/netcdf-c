@@ -474,8 +474,14 @@ jobs:
           else
             tar xvzf $(ls *.tar* *.tgz *.zip | head -1)
           fi
-          ls netcdf-c*
-          cd netcdf-c*
+          ls -d netcdf-c*
+          for name in netcdf-c*;
+          do
+              if [ -d ${name} ];
+              then
+                  cd ${name}
+              fi
+          done
 
       - name: Install System dependencies
         shell: bash -l {0}
