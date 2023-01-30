@@ -474,6 +474,7 @@ jobs:
           else
             tar xvzf $(ls *.tar* *.tgz *.zip | head -1)
           fi
+          ls netcdf-c*
           cd netcdf-c*
 
       - name: Install System dependencies
