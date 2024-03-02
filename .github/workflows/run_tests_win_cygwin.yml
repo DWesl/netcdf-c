@@ -114,6 +114,7 @@ jobs:
           -DENABLE_NETCDF_4=ON -DENABLE_DAP=ON -DBUILD_UTILITIES=ON
           -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=ON -DENABLE_DAP=TRUE
           -DENABLE_HDF5=TRUE -DENABLE_NCZARR=TRUE -DENABLE_DAP_LONG_TESTS=TRUE
+          -DENABLE_PLUGINS=ON
 
       - name: Look at config.log if error
         if: ${{ failure() }}
