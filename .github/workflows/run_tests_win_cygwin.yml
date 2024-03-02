@@ -79,13 +79,14 @@ jobs:
         timeout-minutes: 30
         run: |
           make check -j8 SHELL=/bin/dash
-  build-and-test-autotools:
+  
+  build-and-test-cmake:
     runs-on: windows-latest
     defaults:
       run:
         shell: bash -eo pipefail -o igncr "{0}"
 
-    name: Cygwin-based Autotools tests
+    name: Cygwin-based CMake tests
     
     strategy:
       matrix:
