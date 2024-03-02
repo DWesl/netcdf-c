@@ -84,7 +84,7 @@ jobs:
     runs-on: windows-latest
     defaults:
       run:
-        shell: bash -eo pipefail -o igncr "{0}"
+        shell: "C:/cygwin/bin/bash.exe" -eo pipefail -o igncr "{0}"
 
     name: Cygwin-based CMake tests
     
@@ -110,7 +110,7 @@ jobs:
 
       - name: (CMake) Configure in-tree build
         run: >-
-          cmake -B ${{ matrix.build_dir }} -S . -DCMAKE_INSTALL_PREFIX=/usr 
+          /usr/bin/cmake -B ${{ matrix.build_dir }} -S . -DCMAKE_INSTALL_PREFIX=/usr 
           -DENABLE_NETCDF_4=ON -DENABLE_DAP=ON -DBUILD_UTILITIES=ON
           -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=ON -DENABLE_DAP=TRUE
           -DENABLE_HDF5=TRUE -DENABLE_NCZARR=TRUE -DENABLE_DAP_LONG_TESTS=TRUE
@@ -121,14 +121,14 @@ jobs:
         run: cat config.log
 
       - name: Print summary
-        run: cat libnetcdf.settings
+        run: cat ${{ matrix.build_dir }}/CMakeCache.txt
 
       - name: (CMake) Build library and utilities
-        run: cmake --build -B ${{ matrix.build_dir }} -j8 SHELL=/bin/dash
+        run: /usr/bin/cmake --build -B ${{ matrix.build_dir }} -j8 SHELL=/bin/dash
 
       - name: (CMake) Test DESTDIR install
         run: |
-          cmake --build -B ${{ matrix.build_dir }} --target install DESTDIR=/tmp/pretend-root SHELL=/bin/dash
+          /usr/bin/cmake --build -B ${{ matrix.build_dir }} --target install DESTDIR=/tmp/pretend-root SHELL=/bin/dash
           if [ -d "/tmp/pretend-root/$(pwd)" ];
           then
               find /tmp/pretend-root/$(pwd)
