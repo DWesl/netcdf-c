@@ -129,11 +129,11 @@ jobs:
         run: cat ${{ matrix.build_dir }}/CMakeCache.txt
 
       - name: (CMake) Build library and utilities
-        run: /usr/bin/cmake --build -B ${{ matrix.build_dir }} -j8
+        run: /usr/bin/cmake --build ${{ matrix.build_dir }} -j8
 
       - name: (CMake) Test DESTDIR install
         run: |
-          DESTDIR=/tmp/pretend-root /usr/bin/cmake --build -B ${{ matrix.build_dir }} --target install
+          DESTDIR=/tmp/pretend-root /usr/bin/cmake --build ${{ matrix.build_dir }} --target install
           if [ -d "/tmp/pretend-root/$(pwd)" ];
           then
               find /tmp/pretend-root/$(pwd)
