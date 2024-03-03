@@ -109,6 +109,10 @@ jobs:
             libdeflate-devel gcc-core libcurl-devel libiconv-devel
             libssl-devel libcrypt-devel
 
+      - uses: egor-tensin/cleanup-path@v4
+        with:
+          dirs: "C:/cygwin/bin;C:/cygwin/lib/lapack"
+
       - name: (CMake) Configure in-tree build
         run: >-
           /usr/bin/cmake -B ${{ matrix.build_dir }} -S . -DCMAKE_INSTALL_PREFIX=/usr 
