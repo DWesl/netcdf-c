@@ -73,3 +73,62 @@ jobs:
           path: |
             */*.log
             */*.trs
+
+
+  build-and-test-cmake:
+
+    runs-on: windows-latest
+    defaults:
+      run:
+        shell: msys2 {0}
+
+    steps:
+
+      - uses: actions/checkout@v3
+      - uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: git mingw-w64-x86_64-toolchain m4 make cmake mingw-w64-x86_64-hdf5 unzip mingw-w64-x86_64-libxml2 mingw-w64-x86_64-zlib
+
+###
+# Configure and build
+###
+      - name: (CMake) Configure Build
+        run: >-
+          cmake -B . -S . -DCMAKE_INSTALL_PREFIX=/usr 
+          -DENABLE_NETCDF_4=ON -DENABLE_DAP=ON -DBUILD_UTILITIES=ON
+          -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=ON -DENABLE_DAP=TRUE
+          -DENABLE_HDF5=TRUE -DENABLE_NCZARR=TRUE -DENABLE_DAP_LONG_TESTS=TRUE
+          -DENABLE_PLUGINS=ON
+        if: ${{ success() }}
+
+      - name: (CMake) Look at config.log if error
+        run: cat config.log
+        if: ${{ failure() }}
+
+      - name: (CMake) Print Summary
+        run: cat libnetcdf.settings
+
+      - name: (CMake) Build Library and Utilities
+        run: make -j 8 LDFLAGS="-Wl,--export-all-symbols"
+        if: ${{ success() }}
+
+      - name: Check for plugins
+        run: |
+          dir ./plugins
+          if test -f ./plugins/.libs ; then dir ./plugins/.libs; fi
+
+      - name: (CMake) Build and Run Tests
+        run: make check -j 8 LDFLAGS="-Wl,--export-all-symbols"
+        if: ${{ success() }}
+        id: tests
+
+      - name: Upload test failures
+        if: ${{ failure() && steps.tests.conclusion == 'failure' }}
+        uses: actions/upload-artifact@v3
+        with:
+          name: mingw-cmake-test-logs
+          path: |
+            */*.log
+            */*.trs
