@@ -124,8 +124,8 @@ jobs:
 
       - name: (CMake) Build library and utilities
         run: >-
-            /usr/bin/cmake --build ${{ matrix.build_dir }} --verbose -j8
-              --config Release --target ALL_BUILD
+            /usr/bin/cmake --config Release --target ALL_BUILD 
+              --build ${{ matrix.build_dir }} --verbose -j8
 
       - name: (CMake) Test DESTDIR install
         run: |
