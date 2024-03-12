@@ -113,23 +113,19 @@ jobs:
         with:
           dirs: "C:/cygwin/bin;C:/cygwin/lib/lapack"
 
-      - name: (CMake) Configure in-tree build
+      - name: (CMake) Configure out-of-tree build
         run: >-
-          /usr/bin/cmake -B ${{ matrix.build_dir }} -S . -DCMAKE_INSTALL_PREFIX=/usr 
-          -DENABLE_NETCDF_4=ON -DENABLE_DAP=ON -DBUILD_UTILITIES=ON
-          -DBUILD_SHARED_LIBS=ON -DENABLE_TESTS=ON -DENABLE_DAP=TRUE
-          -DENABLE_HDF5=TRUE -DENABLE_NCZARR=TRUE -DENABLE_DAP_LONG_TESTS=TRUE
-          -DENABLE_PLUGINS=ON
+          /usr/bin/cmake -B ${{ matrix.build_dir }} -S . -DBUILD_SHARED_LIBS=ON
+          -DNC_FIND_SHARED_LIBS=ON  -DCURL_NO_CURL_CMAKE=ON
 
       - name: Look at CMakeCache.txt if error
         if: ${{ failure() }}
         run: cat ${{ matrix.build_dir }}/CMakeCache.txt
 
-      - name: Print summary
-        run: cat ${{ matrix.build_dir }}/netcdf.settings
-
       - name: (CMake) Build library and utilities
-        run: /usr/bin/cmake --build ${{ matrix.build_dir }} --verbose -j8
+        run: >-
+            /usr/bin/cmake --build ${{ matrix.build_dir }} --verbose -j8
+              --config Release --target ALL_BUILD
 
       - name: (CMake) Test DESTDIR install
         run: |
@@ -143,7 +139,7 @@ jobs:
       - name: (CMake) Build and run tests
         timeout-minutes: 30
         run: |
-          ctest -B ${{ matrix.build_dir }} -j8 SHELL=/bin/dash
+          cmake --build ${{ matrix.build_dir }} --config Release --target RUN_TESTS
 
       - name: (CMake) Verbose output of CTest failures
         if: failure() && steps.cmake-tests.conclusion == 'failure'
