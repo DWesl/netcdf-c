@@ -27,7 +27,7 @@
 #include "nclog.h"
 #include "ncrc.h"
 #include "nchttp.h"
-#ifdef ENABLE_S3
+#ifdef NETCDF_ENABLE_S3
 #include "ncs3sdk.h"
 #endif
 
@@ -61,7 +61,7 @@ struct MagicFile {
 #endif
     char* curlurl; /* url to use with CURLOPT_SET_URL */
     NC_HTTP_STATE* state;
-#ifdef ENABLE_S3
+#ifdef NETCDF_ENABLE_S3
     NCS3INFO s3;
     void* s3client;
     char* errmsg;
@@ -557,10 +557,9 @@ negateone(const char* mode, NClist* newmodes)
     const struct MODEINFER* tests = modenegations;
     int changed = 0;
     for(;tests->key;tests++) {
-	int i;
 	if(strcasecmp(tests->key,mode)==0) {
 	    /* Find and remove all instances of the inference value */
-	    for(i=nclistlength(newmodes)-1;i>=0;i--) {
+	    for(size_t i = nclistlength(newmodes); i-- > 0;) {
 		char* candidate = nclistget(newmodes,i);
 		if(strcasecmp(candidate,tests->inference)==0) {
 		    nclistremove(newmodes,i);
@@ -902,13 +901,16 @@ NC_infermodel(const char* path, int* omodep, int iscreate, int useparallel, void
         ncurisetfragments(uri,sfrag);
         nullfree(sfrag); sfrag = NULL;
 
+#ifdef NETCDF_ENABLE_S3
 	/* If s3, then rebuild the url */
-	if(NC_iss3(uri)) {
+	if(NC_iss3(uri,NULL)) {
 	    NCURI* newuri = NULL;
 	    if((stat = NC_s3urlrebuild(uri,NULL,&newuri))) goto done;
 	    ncurifree(uri);
 	    uri = newuri;
-	} else if(strcmp(uri->protocol,"file")==0) {
+	} else
+#endif
+	if(strcmp(uri->protocol,"file")==0) {
             /* convert path to absolute */
 	    char* canon = NULL;
 	    abspath = NCpathabsolute(uri->path);
@@ -1185,25 +1187,25 @@ cleancommalist(const char* commalist, int caseinsensitive)
 static void
 cleanstringlist(NClist* strs, int caseinsensitive)
 {
-    int i,j;
     if(nclistlength(strs) == 0) return;
     /* Remove nulls */
-    for(i=nclistlength(strs)-1;i>=0;i--) {
+    for(size_t i = nclistlength(strs); i-->0;) {
         if(nclistget(strs,i)==NULL) nclistremove(strs,i);
     }
+    if(nclistlength(strs) <= 1) return;
     /* Remove duplicates*/
-    for(i=0;i<nclistlength(strs);i++) {
+    for(size_t i=0;i<nclistlength(strs);i++) {
         const char* value = nclistget(strs,i);
-	/* look ahead for duplicates */
-        for(j=nclistlength(strs)-1;j>i;j--) {
-	    int match;
+        /* look ahead for duplicates */
+        for(size_t j=nclistlength(strs)-1;j>i;j--) {
+            int match;
             const char* candidate = nclistget(strs,j);
             if(caseinsensitive)
-	        match = (strcasecmp(value,candidate) == 0);
-	    else
-		match = (strcmp(value,candidate) == 0);
-	    if(match) {char* dup = nclistremove(strs,j); nullfree(dup);}
-	}
+                match = (strcasecmp(value,candidate) == 0);
+            else
+                match = (strcmp(value,candidate) == 0);
+            if(match) {char* dup = nclistremove(strs,j); nullfree(dup);}
+        }
     }
 }
 
@@ -1320,7 +1322,7 @@ openmagic(struct MagicFile* file)
 	goto done;
     }
     if(file->uri != NULL) {
-#ifdef ENABLE_BYTERANGE
+#ifdef NETCDF_ENABLE_BYTERANGE
 	/* Construct a URL minus any fragment */
         file->curlurl = ncuribuild(file->uri,NULL,NULL,NCURISVC);
 	/* Open the curl handle */
@@ -1384,7 +1386,9 @@ openmagic(struct MagicFile* file)
 		file->filelen = (long long)size;
 #endif
 	}
-        rewind(file->fp);
+        int retval2 = fseek(file->fp, 0L, SEEK_SET);        
+	    if(retval2 != 0)
+		{status = errno; goto done;}
     }
 done:
     return check(status);
@@ -1408,7 +1412,7 @@ readmagic(struct MagicFile* file, long pos, char* magic)
 	printmagic("XXX: readmagic",magic,file);
 #endif
     } else if(file->uri != NULL) {
-#ifdef ENABLE_BYTERANGE
+#ifdef NETCDF_ENABLE_BYTERANGE
 	fileoffset_t start = (size_t)pos;
 	fileoffset_t count = MAGIC_NUMBER_LEN;
         status = nc_http_read(file->state, start, count, buf);
@@ -1463,7 +1467,7 @@ closemagic(struct MagicFile* file)
     if(fIsSet(file->omode,NC_INMEMORY)) {
 	/* noop */
     } else if(file->uri != NULL) {
-#ifdef ENABLE_BYTERANGE
+#ifdef NETCDF_ENABLE_BYTERANGE
 	    status = nc_http_close(file->state);
 #endif
 	    nullfree(file->curlurl);

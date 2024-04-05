@@ -30,7 +30,7 @@ Currently two operations are defined:
    necessary in order to get to the right NC* instance.
 */
 
-#if defined(ENABLE_DAP4) || defined(ENABLE_DAP2)
+#if defined(NETCDF_ENABLE_DAP4) || defined(NETCDF_ENABLE_DAP2)
 EXTERNL NC* NCD4_get_substrate(NC* nc);
 EXTERNL NC* NCD2_get_substrate(NC* nc);
 static NC*
@@ -235,7 +235,7 @@ nc_copy_data_all(int ncid, nc_type xtype, const void* memory, size_t count, void
 
     /* allocate the top-level */
     if(count > 0) {
-        if((copy = calloc(xsize,count))==NULL)
+        if((copy = calloc(count,xsize))==NULL)
 	    {stat = NC_ENOMEM; goto done;}
     }
     stat = nc_copy_data(ncid,xtype,memory,count,copy);
