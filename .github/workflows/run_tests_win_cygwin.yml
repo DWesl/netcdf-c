@@ -124,16 +124,16 @@ jobs:
 
       - name: (CMake) Build library and utilities
         run: >-
-            /usr/bin/cmake --config Release --build ${{ matrix.build_dir }}
-               --verbose -j8 --target ALL_BUILD 
+            cd ${{ matrix.build_dir }} && make -j8
 
       - name: (CMake) Test DESTDIR install
         run: |
-          DESTDIR=/tmp/pretend-root /usr/bin/cmake --build ${{ matrix.build_dir }} --target install
-          if [ -d "/tmp/pretend-root/$(pwd)" ];
+          cd ${{ matrix.build_dir }}
+          DESTDIR=/tmp/pretend-root /usr/bin/cmake --build . --target install
+          if [ -d "/tmp/pretend-root/$(dirname $(pwd))" ];
           then
               find /tmp/pretend-root/$(pwd)
-              if [ $(find /tmp/pretend-root/$(pwd) -type f | wc -l) -gt 0 ]; then exit 1; fi
+              if [ $(find /tmp/pretend-root/$(dirname $(pwd)) -type f | wc -l) -gt 0 ]; then exit 1; fi
           fi
 
       - name: (CMake) Build and run tests
