@@ -152,4 +152,4 @@ jobs:
         with:
           name: cygwin-cmake-test-logs
           path: |
-            build/Testing/
+            ${{ matrix.build_dir }}/Testing/
