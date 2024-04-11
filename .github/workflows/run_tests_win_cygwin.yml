@@ -143,12 +143,12 @@ jobs:
           ctest --output-on-failure .
 
       - name: (CMake) Verbose output of CTest failures
-        if: failure() && steps.cmake-tests.conclusion == 'failure'
+        if: failure()
         run: >-
           cd ${{ matrix.build_dir }} && /usr/bin/ctest --output-on-failure -j8 --rerun-failed -VV .
 
       - uses: actions/upload-artifact@v3
-        if: failure() && steps.cmake-tests.conclusion == 'failure'
+        if: failure()
         with:
           name: cygwin-cmake-test-logs
           path: |
