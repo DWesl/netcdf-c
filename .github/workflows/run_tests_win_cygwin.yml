@@ -139,12 +139,13 @@ jobs:
       - name: (CMake) Build and run tests
         timeout-minutes: 30
         run: |
-          cmake --build ${{ matrix.build_dir }} --config Release --target RUN_TESTS
+          cd ${{ matrix.build_dir }}
+          ctest --output-on-failure .
 
       - name: (CMake) Verbose output of CTest failures
         if: failure() && steps.cmake-tests.conclusion == 'failure'
         run: >-
-          cd build && /usr/bin/ctest --output-on-failure -j8 --rerun-failed -VV .
+          cd ${{ matrix.build_dir }} && /usr/bin/ctest --output-on-failure -j8 --rerun-failed -VV .
 
       - uses: actions/upload-artifact@v3
         if: failure() && steps.cmake-tests.conclusion == 'failure'
